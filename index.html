@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Foundation for Youth Empowerment (FOYE) | Empowering Youth, Building Futures</title>
+  <meta name="description" content="Foundation for Youth Empowerment (FOYE) is a youth-led organization in South Sudan committed to empowering young people through skills, mentorship, and economic self-reliance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --forest-900: #0B2D1E;
+      --forest-800: #10402A;
+      --forest-700: #185534;
+      --forest-600: #1E6B40;
+      --forest-500: #2E8B57;
+      --forest-400: #4CAF7D;
+      --forest-100: #D9EFE1;
+      --forest-50: #EFF8F1;
+      --white: #FFFFFF;
+      --black: #0F1A14;
+      --gray: #6B7280;
+      --border: rgba(0,0,0,0.04);
+      --shadow-sm: 0 8px 25px rgba(0,0,0,0.05);
+      --shadow-md: 0 18px 50px rgba(0,0,0,0.08);
+      --shadow-lg: 0 30px 70px rgba(0,0,0,0.12);
+      --transition: 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* Top Bar */
+    .top-bar {
+      background: var(--forest-900);
+      color: rgba(255,255,255,0.9);
+      font-size: 13px;
+      padding: 8px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      z-index: 1001;
+      position: relative;
+    }
+    .top-bar a { color: rgba(255,255,255,0.85); transition: color 0.3s; }
+    .top-bar a:hover { color: var(--forest-400); }
+    .top-bar .left, .top-bar .right { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px clamp(20px,4vw,60px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
+    }
+    .navbar.scrolled { background: rgba(255,255,255,0.98); box-shadow: 0 15px 40px rgba(0,0,0,0.1); padding: 10px clamp(20px,4vw,60px); }
+    .logo { display: flex; align-items: center; gap: 12px; color: var(--forest-900); font-size: 24px; font-weight: 700; z-index: 1002; }
+    .logo img { width: 46px; height: 46px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .nav-links { display: flex; gap: 4px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--forest-900); font-weight: 500; font-size: 14px; padding: 8px 14px; border-radius: 8px; transition: all 0.3s; white-space: nowrap; position: relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:2px; left:50%; width:0; height:2px; background: var(--forest-500); transition:all 0.3s; transform:translateX(-50%); }
+    .nav-links a:hover { color: var(--forest-600); }
+    .nav-links a:hover::after { width:60%; }
+    .dropdown { position: relative; }
+    .dropdown-menu { position:absolute; top:100%; left:0; background:white; border-radius:16px; box-shadow:var(--shadow-md); padding:8px 0; min-width:220px; opacity:0; visibility:hidden; transform:translateY(10px); transition:0.3s; border:1px solid var(--border); z-index:10; }
+    .dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform:translateY(0); }
+    .dropdown-menu a { display:block; padding:10px 20px; font-weight:500; color:var(--forest-900); font-size:13px; }
+    .dropdown-menu a:hover { background:var(--forest-50); color:var(--forest-600); }
+    .nav-cta { background:var(--forest-500); color:white !important; padding:10px 22px; border-radius:999px; font-weight:600; box-shadow:0 6px 20px rgba(46,139,87,0.4); }
+    .nav-cta:hover { background:var(--forest-600); }
+
+    .mobile-toggle { display:none; background:none; border:none; color:var(--forest-900); cursor:pointer; z-index:1002; padding:6px; }
+    .mobile-toggle span { display:block; width:24px; height:2px; background:currentColor; margin:5px 0; transition:0.3s; border-radius:2px; }
+    .mobile-menu { position:fixed; inset:0; background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); z-index:1000; padding:100px 30px 30px; transform:translateX(100%); transition:0.4s ease; display:flex; flex-direction:column; gap:4px; overflow-y:auto; }
+    .mobile-menu.active { transform:translateX(0); }
+    .mobile-menu a { color:var(--forest-900); font-size:20px; font-family:'Poppins',sans-serif; font-weight:600; padding:14px 0; border-bottom:1px solid var(--border); display:block; }
+    .mobile-dropdown-btn { background:none; border:none; width:100%; display:flex; justify-content:space-between; align-items:center; color:var(--forest-900); font-size:20px; font-family:'Poppins',sans-serif; font-weight:600; padding:14px 0; border-bottom:1px solid var(--border); cursor:pointer; }
+    .mobile-dropdown-btn i { font-size:14px; transition:transform 0.3s; }
+    .mobile-submenu { display:none; padding-left:20px; margin-bottom:8px; }
+    .mobile-submenu.open { display:block; }
+    .mobile-submenu a { font-size:18px; padding:10px 0; border-bottom:none; }
+
+    /* Hero Slider */
+    .hero { position:relative; height:100vh; min-height:650px; overflow:hidden; }
+    .hero-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.2s ease; transform:scale(1.05); }
+    .hero-slide.active { opacity:1; transform:scale(1); }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(11,45,30,0.85) 0%, rgba(46,139,87,0.5) 100%); z-index:1; }
+    .hero-content { position:relative; z-index:2; max-width:800px; padding:0 clamp(20px,5vw,40px); height:100%; display:flex; flex-direction:column; justify-content:center; color:white; }
+    .hero-tag { display:inline-block; padding:6px 18px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); border-radius:999px; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:20px; backdrop-filter:blur(4px); letter-spacing:1px; }
+    .hero h1 { font-size: clamp(38px,7vw,64px); margin-bottom:12px; text-shadow:0 4px 20px rgba(0,0,0,0.4); }
+    .hero .motto { font-size: clamp(20px,3vw,28px); color:#D9EFE1; margin-bottom:20px; font-weight:600; }
+    .hero p { font-size:18px; max-width:600px; margin-bottom:30px; color:rgba(255,255,255,0.9); }
+    .btn-group { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn-primary { background:white; color:var(--forest-800); padding:14px 32px; border-radius:999px; font-weight:700; display:inline-flex; align-items:center; gap:8px; transition:all 0.3s; box-shadow:0 10px 25px rgba(0,0,0,0.2); border:none; cursor:pointer; }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 35px rgba(0,0,0,0.3); background:var(--forest-50); }
+    .btn-outline { border:2px solid white; color:white; padding:14px 32px; border-radius:999px; font-weight:600; background:transparent; cursor:pointer; transition:all 0.3s; }
+    .btn-outline:hover { background:rgba(255,255,255,0.2); }
+
+    /* Sections */
+    section { padding:100px clamp(20px,5vw,80px); }
+    .section-gray { background:var(--forest-50); }
+    .eyebrow { display:inline-block; color:var(--forest-600); font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+    .section-title { font-size: clamp(32px,5vw,48px); margin-bottom:24px; color:var(--forest-900); }
+    .section-subtitle { color:var(--gray); font-size:18px; margin-bottom:40px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
+    .card { background:white; border-radius:20px; padding:32px; box-shadow:var(--shadow-sm); transition:var(--transition); border:1px solid var(--border); position:relative; overflow:hidden; }
+    .card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+    .card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--forest-400),var(--forest-600)); transform:scaleX(0); transform-origin:left; transition:0.4s; }
+    .card:hover::after { transform:scaleX(1); }
+    .card-img { aspect-ratio:16/10; border-radius:16px; overflow:hidden; margin-bottom:20px; }
+    .card-img img { width:100%; height:100%; object-fit:cover; transition:0.6s; }
+    .card:hover .card-img img { transform:scale(1.06); }
+    .cta-link { color:var(--forest-600); font-weight:700; display:inline-flex; align-items:center; gap:6px; margin-top:16px; transition:color 0.3s; }
+    .cta-link:hover { color:var(--forest-800); }
+
+    .reveal { opacity:0; transform:translateY(30px); transition:0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* Mission, Values */
+    .card-icon { width:60px; height:60px; border-radius:18px; background:var(--forest-100); display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:28px; color:var(--forest-600); }
+    .values-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:15px; }
+    .value-item { display:flex; align-items:center; gap:10px; padding:12px; background:white; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.04); font-weight:600; color:var(--forest-900); transition:all 0.3s; }
+    .value-item:hover { transform:translateY(-3px); box-shadow:0 6px 15px rgba(0,0,0,0.08); }
+    .approach-steps { display:flex; flex-direction:column; gap:15px; }
+    .step { display:flex; align-items:flex-start; gap:12px; }
+    .step-number { background:var(--forest-500); color:white; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
+
+    /* Programs */
+    .programs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; margin-top:40px; }
+    .program-card { background:white; border-radius:20px; padding:32px 28px; box-shadow:var(--shadow-sm); transition:all 0.4s; border:1px solid var(--border); display:flex; flex-direction:column; position:relative; overflow:hidden; }
+    .program-card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--forest-400),var(--forest-600)); transform:scaleX(0); transform-origin:left; transition:0.5s; }
+    .program-card:hover::after { transform:scaleX(1); }
+    .program-card:hover { transform:translateY(-10px); box-shadow:var(--shadow-lg); border-color:rgba(46,139,87,0.2); }
+    .program-icon { width:64px; height:64px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:20px; color:white; background:linear-gradient(135deg,var(--forest-500),var(--forest-700)); box-shadow:0 8px 20px rgba(46,139,87,0.3); transition:transform 0.3s; }
+    .program-card:hover .program-icon { transform:scale(1.1) rotate(3deg); }
+    .program-card h3 { font-size:24px; color:var(--forest-900); margin-bottom:10px; }
+    .program-card p { color:var(--gray); font-size:15px; margin-bottom:15px; flex-grow:1; }
+    .program-list { list-style:none; padding:0; margin:0 0 20px 0; }
+    .program-list li { display:flex; align-items:center; gap:10px; font-size:13px; padding:4px 0; }
+    .program-list li i { color:var(--forest-500); font-size:12px; }
+
+    /* Where We Work */
+    .where-we-work { position:relative; padding:100px clamp(20px,5vw,80px); background-size:cover; background-position:center; background-attachment:fixed; color:white; overflow:hidden; }
+    .where-overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(11,45,30,0.9) 0%, rgba(46,139,87,0.6) 100%); z-index:1; }
+    .where-content { position:relative; z-index:2; max-width:1200px; margin:0 auto; }
+    .where-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:25px; }
+    .where-card { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2); border-radius:20px; padding:25px; text-align:center; transition:0.4s; }
+    .where-card:hover { background:rgba(255,255,255,0.2); transform:translateY(-8px); }
+    .where-icon { width:55px; height:55px; border-radius:16px; background:white; color:var(--forest-700); display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-size:22px; }
+    .where-card h3 { font-size:24px; margin-bottom:8px; }
+    .where-card p { font-size:14px; color:rgba(255,255,255,0.8); }
+
+    /* Impact */
+    .impact-section { background:linear-gradient(135deg, var(--forest-900) 0%, #0B2D1E 100%); padding:100px clamp(20px,5vw,80px); position:relative; overflow:hidden; }
+    .impact-section::before { content:''; position:absolute; top:-50%; right:-20%; width:500px; height:500px; background:radial-gradient(circle, rgba(46,139,87,0.2) 0%, transparent 70%); border-radius:50%; }
+    .impact-container { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+    .impact-heading { text-align:center; margin-bottom:60px; }
+    .impact-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; }
+    .impact-stat { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:35px 20px; text-align:center; backdrop-filter:blur(6px); transition:0.4s; }
+    .impact-stat:hover { transform:translateY(-10px); background:rgba(255,255,255,0.12); border-color:rgba(46,139,87,0.4); }
+    .stat-icon { width:70px; height:70px; border-radius:20px; background:rgba(46,139,87,0.2); color:var(--forest-400); display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 20px; }
+    .stat-number { font-size:58px; font-weight:700; color:white; line-height:1; margin-bottom:8px; }
+    .stat-label { color:rgba(255,255,255,0.7); font-size:16px; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+
+    /* News */
+    .news-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
+    .news-card { background:white; border-radius:20px; overflow:hidden; box-shadow:var(--shadow-sm); transition:0.4s; display:flex; flex-direction:column; border:1px solid var(--border); }
+    .news-card:hover { transform:translateY(-10px); box-shadow:var(--shadow-lg); }
+    .news-image { aspect-ratio:16/10; overflow:hidden; }
+    .news-image img { width:100%; height:100%; object-fit:cover; transition:0.6s; }
+    .news-card:hover .news-image img { transform:scale(1.08); }
+    .news-body { padding:24px; flex-grow:1; display:flex; flex-direction:column; }
+    .news-meta { display:flex; gap:15px; font-size:12px; color:var(--gray); margin-bottom:12px; }
+    .news-meta i { color:var(--forest-500); margin-right:4px; }
+    .news-category { background:var(--forest-100); color:var(--forest-700); padding:4px 12px; border-radius:999px; font-weight:600; font-size:11px; text-transform:uppercase; }
+    .news-card h3 { font-size:22px; color:var(--forest-900); margin-bottom:10px; }
+    .news-excerpt { color:var(--gray); font-size:14px; flex-grow:1; margin-bottom:20px; }
+
+    /* Resources */
+    .resources-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:30px; margin-top:20px; }
+    .resource-card { background:white; border-radius:20px; padding:35px 30px; box-shadow:var(--shadow-sm); transition:0.45s; border:1px solid var(--border); position:relative; overflow:hidden; display:flex; flex-direction:column; }
+    .resource-card:hover { transform:translateY(-12px); box-shadow:var(--shadow-lg); }
+    .resource-icon { width:60px; height:60px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:20px; color:white; background:linear-gradient(135deg,var(--forest-500),var(--forest-700)); }
+    .resource-card h3 { font-size:24px; color:var(--forest-900); margin-bottom:10px; }
+    .resource-card p { color:var(--gray); font-size:14px; flex-grow:1; }
+
+    /* Partners */
+    .partners-section { background:var(--forest-50); padding:100px 0 80px; overflow:hidden; }
+    .partner-marquee { overflow:hidden; position:relative; margin-top:30px; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+    .partner-track { display:flex; width:max-content; animation:marquee 30s linear infinite; }
+    .partner-track:hover { animation-play-state:paused; }
+    .partner-item { display:flex; align-items:center; gap:10px; background:white; border-radius:16px; padding:20px 30px; margin:0 15px; box-shadow:var(--shadow-sm); transition:0.3s; border:1px solid var(--border); }
+    .partner-item i { font-size:24px; color:var(--forest-600); }
+    .partner-item span { font-weight:700; color:var(--forest-900); font-size:16px; }
+    .partner-item:hover { transform:translateY(-5px); box-shadow:var(--shadow-md); border-color:var(--forest-300); }
+    @keyframes marquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+
+    /* Get Involved */
+    .get-involved { background:linear-gradient(180deg, #FFFFFF 0%, var(--forest-50) 100%); padding:100px clamp(20px,5vw,80px); }
+    .involve-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; margin-top:50px; }
+    .involve-card { background:white; border-radius:20px; padding:35px 30px; box-shadow:var(--shadow-sm); transition:0.4s; border:1px solid var(--border); display:flex; flex-direction:column; }
+    .involve-card:hover { transform:translateY(-12px); box-shadow:var(--shadow-lg); }
+    .involve-icon { width:70px; height:70px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:20px; color:white; background:linear-gradient(135deg,var(--forest-500),var(--forest-700)); box-shadow:0 8px 20px rgba(46,139,87,0.3); }
+    .involve-card h3 { font-size:26px; color:var(--forest-900); margin-bottom:12px; }
+    .involve-card p { color:var(--gray); font-size:15px; margin-bottom:18px; }
+    .involve-list { list-style:none; margin-bottom:20px; flex-grow:1; }
+    .involve-list li { display:flex; align-items:center; gap:10px; font-size:14px; padding:6px 0; }
+    .involve-list li i { color:var(--forest-500); font-size:12px; }
+
+    /* Contact */
+    .contact-section { background:var(--forest-50); }
+    .contact-wrapper { display:grid; grid-template-columns:1fr 1.2fr; gap:50px; margin-top:50px; }
+    .contact-info { display:grid; grid-template-columns:1fr 1fr; gap:25px; }
+    .info-card { background:white; border-radius:20px; padding:28px 22px; box-shadow:var(--shadow-sm); border:1px solid var(--border); transition:0.3s; }
+    .info-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-md); }
+    .info-icon { width:50px; height:50px; border-radius:14px; background:var(--forest-100); color:var(--forest-600); display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:15px; }
+    .info-card h4 { font-size:22px; color:var(--forest-900); margin-bottom:8px; }
+    .info-card p { color:var(--gray); font-size:14px; }
+    .contact-form-card { background:white; border-radius:20px; padding:40px 35px; box-shadow:var(--shadow-md); border:1px solid var(--border); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:15px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label { font-weight:600; font-size:14px; color:var(--forest-900); margin-bottom:6px; display:block; }
+    .form-group input, .form-group textarea { width:100%; padding:14px 16px; border-radius:12px; border:1px solid #E2E8F0; background:var(--forest-50); font-family:'Lato',sans-serif; font-size:15px; transition:0.3s; outline:none; }
+    .form-group input:focus, .form-group textarea:focus { border-color:var(--forest-500); box-shadow:0 0 0 3px rgba(46,139,87,0.2); background:white; }
+    .form-group textarea { resize:vertical; min-height:120px; }
+    .btn-submit { width:100%; justify-content:center; padding:15px; font-size:16px; }
+
+    /* Footer */
+    .footer { background:var(--forest-900); color:rgba(255,255,255,0.85); padding:80px clamp(20px,5vw,60px) 20px; }
+    .footer-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1.2fr; gap:40px; margin-bottom:50px; }
+    .footer-col h4 { font-size:20px; color:#D9EFE1; margin-bottom:20px; }
+    .footer-col ul { list-style:none; padding:0; }
+    .footer-col ul li { margin-bottom:10px; }
+    .footer-col ul li a { color:rgba(255,255,255,0.7); font-size:14px; transition:0.3s; }
+    .footer-col ul li a:hover { color:#D9EFE1; }
+    .footer-about p { color:rgba(255,255,255,0.7); font-size:14px; margin-bottom:20px; }
+    .footer-socials { display:flex; gap:12px; }
+    .footer-socials a { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); color:white; font-size:16px; transition:0.3s; }
+    .footer-socials a:hover { background:#D9EFE1; color:var(--forest-900); transform:translateY(-4px); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.1); padding-top:30px; text-align:center; }
+    .footer-bottom p { font-size:13px; color:rgba(255,255,255,0.5); }
+
+    .back-to-top { position:fixed; bottom:30px; right:30px; width:50px; height:50px; border-radius:50%; background:var(--forest-500); color:white; display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer; opacity:0; visibility:hidden; transition:0.3s; z-index:999; border:none; box-shadow:0 10px 25px rgba(46,139,87,0.4); }
+    .back-to-top.visible { opacity:1; visibility:visible; }
+    .back-to-top:hover { background:var(--forest-700); }
+
+    /* Responsive */
+    @media (max-width:1024px) {
+      .nav-links { display:none; }
+      .mobile-toggle { display:block; }
+      .grid-2, .grid-3 { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+      .contact-wrapper { grid-template-columns:1fr; }
+    }
+    @media (max-width:768px) {
+      .top-bar { display:none; }
+      .footer-grid { grid-template-columns:1fr; }
+      .contact-info { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; gap:0; }
+      .programs-grid, .news-grid, .involve-grid, .resources-grid { grid-template-columns:1fr; }
+      .hero { min-height:550px; }
+      .hero h1 { font-size:36px; }
+      .hero .motto { font-size:20px; }
+      .hero p { font-size:15px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="left">
+      <a href="tel:+211928673465"><i class="fas fa-phone"></i> 0928 673 465</a>
+      <span>|</span>
+      <a href="mailto:contact@foye-ss.org"><i class="fas fa-envelope"></i> contact@foye-ss.org</a>
+    </div>
+    <div class="right">
+      <span>Yambio, South Sudan</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="logo">
+      <img src="assets/foyelogo.jpg" alt="FOYE Logo" />
+      <span>FOYE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li class="dropdown">
+        <a href="#about">About <i class="fas fa-chevron-down"></i></a>
+        <div class="dropdown-menu">
+          <a href="#mission">Mission</a>
+          <a href="#story">Our Story</a>
+        </div>
+      </li>
+      <li class="dropdown">
+        <a href="#programs">Programs <i class="fas fa-chevron-down"></i></a>
+        <div class="dropdown-menu">
+          <a href="#srh">SRH for Girls</a>
+          <a href="#skills">Skills & Mentorship</a>
+          <a href="#advocacy">Advocacy</a>
+        </div>
+      </li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li class="dropdown">
+        <a href="#get-involved">Get Involved <i class="fas fa-chevron-down"></i></a>
+        <div class="dropdown-menu">
+          <a href="#volunteer">Volunteer</a>
+          <a href="#donate">Donate</a>
+          <a href="#partner">Partner</a>
+        </div>
+      </li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#donate" class="nav-cta">Support Us</a></li>
+    </ul>
+    <button class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#">Home</a>
+    <button class="mobile-dropdown-btn" onclick="toggleMobileDropdown(this)">About <i class="fas fa-chevron-down"></i></button>
+    <div class="mobile-submenu">
+      <a href="#mission">Mission</a>
+      <a href="#story">Our Story</a>
+    </div>
+    <button class="mobile-dropdown-btn" onclick="toggleMobileDropdown(this)">Programs <i class="fas fa-chevron-down"></i></button>
+    <div class="mobile-submenu">
+      <a href="#srh">SRH for Girls</a>
+      <a href="#skills">Skills & Mentorship</a>
+      <a href="#advocacy">Advocacy</a>
+    </div>
+    <a href="#news">News</a>
+    <a href="#resources">Resources</a>
+    <a href="#partners">Partners</a>
+    <button class="mobile-dropdown-btn" onclick="toggleMobileDropdown(this)">Get Involved <i class="fas fa-chevron-down"></i></button>
+    <div class="mobile-submenu">
+      <a href="#volunteer">Volunteer</a>
+      <a href="#donate">Donate</a>
+      <a href="#partner">Partner</a>
+    </div>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Hero Slider -->
+  <section class="hero" id="hero">
+    <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1800&q=80');"></div>
+    <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=1800&q=80');"></div>
+    <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1800&q=80');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Youth-Led Organization | Yambio, South Sudan</span>
+      <h1>Empowering Youth,<br>Building Futures.</h1>
+      <div class="motto">Skills • Mentorship • Self-Reliance</div>
+      <p>Foundation for Youth Empowerment (FOYE) is a youth-led organization committed to addressing the knowledge gap, promoting skills and mentoring, and reducing youth unemployment in South Sudan.</p>
+      <div class="btn-group">
+        <a href="#programs" class="btn-primary"><i class="fas fa-arrow-right"></i> Our Programs</a>
+        <a href="#contact" class="btn-outline"><i class="fas fa-hand-holding-heart"></i> Get Involved</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Story -->
+  <section id="about" class="section-gray">
+    <div class="grid-2 reveal">
+      <div>
+        <span class="eyebrow">Who We Are</span>
+        <h2 class="section-title">A Youth-Led <span style="color:var(--forest-600);">Movement</span> for Change</h2>
+        <p style="font-size:18px; margin-bottom:20px;">Foundation for Youth Empowerment (FOYE) is a youth-led organization based in Yambio, South Sudan, committed to empowering young people through initiatives that address knowledge gaps, skills development, mentoring, youth unemployment, and economic self-reliance.</p>
+        <p><strong>Mission:</strong> To empower youth with the skills, knowledge, and opportunities they need to become self-reliant and active contributors to society.</p>
+        <p><strong>Vision:</strong> A South Sudan where every young person has the chance to reach their full potential.</p>
+        <div class="cta-link"><a href="#mission">Learn more <i class="fas fa-arrow-right"></i></a></div>
+      </div>
+      <div class="card-img" style="border-radius:20px; overflow:hidden; box-shadow:var(--shadow-lg);">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Youth empowerment">
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission, Vision, Values -->
+  <section id="mission" class="section-light">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Guiding Principles</span>
+        <h2 class="section-title">Our <span style="color:var(--forest-600);">Mission, Vision & Values</span></h2>
+      </div>
+      <div class="grid-2 reveal" style="margin-bottom:50px;">
+        <div class="card">
+          <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+          <h3>Our Mission</h3>
+          <p>To empower youth with the skills, knowledge, and opportunities they need to become self-reliant and active contributors to society.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fas fa-eye"></i></div>
+          <h3>Our Vision</h3>
+          <p>A South Sudan where every young person has the chance to reach their full potential.</p>
+        </div>
+      </div>
+      <div class="grid-2 reveal">
+        <div class="card" style="background:var(--forest-50);">
+          <h3 style="color:var(--forest-700); margin-bottom:15px;">Core Values</h3>
+          <div class="values-grid">
+            <div class="value-item"><i class="fas fa-users" style="color:var(--forest-600);"></i> Youth Empowerment</div>
+            <div class="value-item"><i class="fas fa-hand-holding-heart" style="color:var(--forest-600);"></i> Compassion</div>
+            <div class="value-item"><i class="fas fa-shield-alt" style="color:var(--forest-600);"></i> Integrity</div>
+            <div class="value-item"><i class="fas fa-lightbulb" style="color:var(--forest-600);"></i> Innovation</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--forest-700); margin-bottom:15px;">How We Work</h3>
+          <div class="approach-steps">
+            <div class="step"><span class="step-number">1</span><p><strong>Skills Development</strong> – Providing training and mentorship.</p></div>
+            <div class="step"><span class="step-number">2</span><p><strong>SRH Programs</strong> – Improving sexual and reproductive health for vulnerable girls.</p></div>
+            <div class="step"><span class="step-number">3</span><p><strong>Advocacy</strong> – Promoting gender equality and ending violence.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section id="programs" class="section-gray">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">What We Do</span>
+        <h2 class="section-title">Our <span style="color:var(--forest-600);">Programs</span></h2>
+        <p class="section-subtitle">Initiatives to empower youth and promote self-reliance.</p>
+      </div>
+      <div class="programs-grid reveal">
+        <div class="program-card" id="srh">
+          <div class="program-icon"><i class="fas fa-heartbeat"></i></div>
+          <h3>SRH for Vulnerable Girls</h3>
+          <p>Assessing and addressing the sexual and reproductive health needs of vulnerable adolescent girls, especially in rural schools.</p>
+          <ul class="program-list">
+            <li><i class="fas fa-check"></i> Health education</li>
+            <li><i class="fas fa-check"></i> Sanitary pad distribution</li>
+            <li><i class="fas fa-check"></i> Mentorship</li>
+          </ul>
+          <a href="#contact" class="cta-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="program-card" id="skills">
+          <div class="program-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+          <h3>Skills & Mentorship</h3>
+          <p>Bridging the knowledge gap through vocational skills training, entrepreneurship, and mentorship programs.</p>
+          <ul class="program-list">
+            <li><i class="fas fa-check"></i> Entrepreneurship training</li>
+            <li><i class="fas fa-check"></i> Vocational skills</li>
+            <li><i class="fas fa-check"></i> Mentorship matching</li>
+          </ul>
+          <a href="#contact" class="cta-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="program-card" id="advocacy">
+          <div class="program-icon"><i class="fas fa-bullhorn"></i></div>
+          <h3>Advocacy & Awareness</h3>
+          <p>Raising awareness on gender-based violence, women's rights, and the importance of education for girls.</p>
+          <ul class="program-list">
+            <li><i class="fas fa-check"></i> Community campaigns</li>
+            <li><i class="fas fa-check"></i> GBV prevention</li>
+            <li><i class="fas fa-check"></i> Policy advocacy</li>
+          </ul>
+          <a href="#contact" class="cta-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where We Work -->
+  <section id="where-we-work" class="where-we-work" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=80');">
+    <div class="where-overlay"></div>
+    <div class="where-content">
+      <div class="section-heading reveal">
+        <span class="eyebrow" style="color:#D9EFE1;">Our Footprint</span>
+        <h2 class="section-title" style="color:white;">Where <span style="color:#D9EFE1;">We Work</span></h2>
+        <p style="color:rgba(255,255,255,0.85);">Yambio, South Sudan.</p>
+      </div>
+      <div class="where-grid reveal">
+        <div class="where-card">
+          <div class="where-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Yambio</h3>
+          <p>Main office and operations</p>
+        </div>
+        <div class="where-card">
+          <div class="where-icon"><i class="fas fa-school"></i></div>
+          <h3>Rural Schools</h3>
+          <p>Hard-to-reach areas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section id="impact" class="impact-section">
+    <div class="impact-container">
+      <div class="impact-heading reveal">
+        <span class="eyebrow" style="color:#D9EFE1;">Measurable Change</span>
+        <h2 class="section-title" style="color:white;">Our <span style="color:#D9EFE1;">Impact</span></h2>
+      </div>
+      <div class="impact-stats reveal">
+        <div class="impact-stat">
+          <div class="stat-icon"><i class="fas fa-female"></i></div>
+          <div class="stat-number" data-count="500">0+</div>
+          <div class="stat-label">Girls Reached</div>
+        </div>
+        <div class="impact-stat">
+          <div class="stat-icon"><i class="fas fa-chalkboard"></i></div>
+          <div class="stat-number" data-count="30">0+</div>
+          <div class="stat-label">Workshops Held</div>
+        </div>
+        <div class="impact-stat">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-number" data-count="200">0+</div>
+          <div class="stat-label">Youth Empowered</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="section-gray">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Latest Updates</span>
+        <h2 class="section-title">News & <span style="color:var(--forest-600);">Updates</span></h2>
+      </div>
+      <div class="news-grid reveal">
+        <div class="news-card">
+          <div class="news-image"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Sanitary pads distribution"></div>
+          <div class="news-body">
+            <div class="news-meta"><span><i class="fas fa-calendar"></i> December 16, 2022</span><span class="news-category">Outreach</span></div>
+            <h3>Distribution of Sanitary Pads</h3>
+            <p class="news-excerpt">FOYE distributed sanitary pads and soaps to 30 girls at Basuera Primary School.</p>
+            <a href="#" class="cta-link">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-image"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80" alt="Violence against women"></div>
+          <div class="news-body">
+            <div class="news-meta"><span><i class="fas fa-calendar"></i> December 13, 2022</span><span class="news-category">Advocacy</span></div>
+            <h3>Breaking the Cycle of Violence</h3>
+            <p class="news-excerpt">We call for collective responsibility to stop violence against women and girls in South Sudan.</p>
+            <a href="#" class="cta-link">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-image"><img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=800&q=80" alt="SRH program"></div>
+          <div class="news-body">
+            <div class="news-meta"><span><i class="fas fa-calendar"></i> June 11, 2022</span><span class="news-category">Health</span></div>
+            <h3>SRH Program for Vulnerable Girls</h3>
+            <p class="news-excerpt">We focus on assessing and improving sexual and reproductive health needs in rural schools.</p>
+            <a href="#" class="cta-link">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources" class="section-light">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Knowledge & Transparency</span>
+        <h2 class="section-title">Resources & <span style="color:var(--forest-600);">Publications</span></h2>
+      </div>
+      <div class="resources-grid reveal">
+        <div class="resource-card">
+          <div class="resource-icon"><i class="fas fa-book-open"></i></div>
+          <h3>Annual Reports</h3>
+          <p>Yearly summaries of activities and achievements.</p>
+        </div>
+        <div class="resource-card">
+          <div class="resource-icon"><i class="fas fa-file-alt"></i></div>
+          <h3>Guides & Toolkits</h3>
+          <p>Resources for youth empowerment and SRH education.</p>
+        </div>
+        <div class="resource-card">
+          <div class="resource-icon"><i class="fas fa-bullhorn"></i></div>
+          <h3>Public Statements</h3>
+          <p>Official positions on youth and gender issues.</p>
+        </div>
+        <div class="resource-card">
+          <div class="resource-icon"><i class="fas fa-file-contract"></i></div>
+          <h3>Policies</h3>
+          <p>Organizational policies and governance documents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section id="partners" class="partners-section">
+    <div class="container">
+      <div class="section-heading reveal" style="text-align:center;">
+        <span class="eyebrow">Collaboration</span>
+        <h2 class="section-title">Our <span style="color:var(--forest-600);">Partners</span></h2>
+      </div>
+    </div>
+    <div class="partner-marquee reveal">
+      <div class="partner-track">
+        <div class="partner-item"><i class="fas fa-globe"></i><span>UNICEF</span></div>
+        <div class="partner-item"><i class="fas fa-hand-holding-heart"></i><span>Community Partners</span></div>
+        <div class="partner-item"><i class="fas fa-building-columns"></i><span>Local Government</span></div>
+        <div class="partner-item"><i class="fas fa-users"></i><span>Youth Groups</span></div>
+        <div class="partner-item"><i class="fas fa-globe"></i><span>UNICEF</span></div>
+        <div class="partner-item"><i class="fas fa-hand-holding-heart"></i><span>Community Partners</span></div>
+        <div class="partner-item"><i class="fas fa-building-columns"></i><span>Local Government</span></div>
+        <div class="partner-item"><i class="fas fa-users"></i><span>Youth Groups</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved -->
+  <section id="get-involved" class="get-involved">
+    <div class="container">
+      <div class="section-heading reveal" style="text-align:center;">
+        <span class="eyebrow">Take Action</span>
+        <h2 class="section-title">Get <span style="color:var(--forest-600);">Involved</span></h2>
+      </div>
+      <div class="involve-grid reveal">
+        <div class="involve-card" id="volunteer">
+          <div class="involve-icon"><i class="fas fa-hand-holding-heart"></i></div>
+          <h3>Volunteer</h3>
+          <p>Join our team and help empower youth, support SRH programs, and advocate for change.</p>
+          <ul class="involve-list">
+            <li><i class="fas fa-check"></i> Flexible roles</li>
+            <li><i class="fas fa-check"></i> Training provided</li>
+          </ul>
+          <a href="#contact" class="cta-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="involve-card" id="donate">
+          <div class="involve-icon"><i class="fas fa-donate"></i></div>
+          <h3>Donate</h3>
+          <p>Support our programs with funds, materials, or services to help more youth.</p>
+          <ul class="involve-list">
+            <li><i class="fas fa-check"></i> Fund SRH programs</li>
+            <li><i class="fas fa-check"></i> Support skills training</li>
+          </ul>
+          <a href="#contact" class="cta-link">Donate Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="involve-card" id="partner">
+          <div class="involve-icon"><i class="fas fa-handshake"></i></div>
+          <h3>Partner</h3>
+          <p>Collaborate with us to amplify youth empowerment and gender equality.</p>
+          <ul class="involve-list">
+            <li><i class="fas fa-check"></i> Joint initiatives</li>
+            <li><i class="fas fa-check"></i> Advocacy</li>
+          </ul>
+          <a href="#contact" class="cta-link">Partner With Us <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-heading reveal" style="text-align:center;">
+        <span class="eyebrow">Get In Touch</span>
+        <h2 class="section-title">Contact <span style="color:var(--forest-600);">Us</span></h2>
+      </div>
+      <div class="contact-wrapper reveal">
+        <div class="contact-info">
+          <div class="info-card">
+            <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <h4>Visit Us</h4>
+            <p>Yambio, South Sudan</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><i class="fas fa-phone"></i></div>
+            <h4>Call Us</h4>
+            <p>0928 673 465</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <h4>Email</h4>
+            <p>contact@foye-ss.org</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><i class="fas fa-clock"></i></div>
+            <h4>Office Hours</h4>
+            <p>Mon – Fri: 9:00 AM – 4:00 PM</p>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <h3 style="font-family:'Poppins',sans-serif; font-size:26px; color:var(--forest-900); margin-bottom:20px;">Send a Message</h3>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name *</label><input type="text" required placeholder="Your name" /></div>
+              <div class="form-group"><label>Email *</label><input type="email" required placeholder="Your email" /></div>
+            </div>
+            <div class="form-group"><label>Subject</label><input type="text" placeholder="How can we help?" /></div>
+            <div class="form-group"><label>Message *</label><textarea required placeholder="Write your message..."></textarea></div>
+            <button type="submit" class="btn-primary btn-submit">Send Message <i class="fas fa-paper-plane"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-about">
+        <h4>FOYE</h4>
+        <p>Foundation for Youth Empowerment is a youth-led organization committed to empowering young people through skills, mentorship, and economic self-reliance.</p>
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#news">News</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#srh">SRH for Girls</a></li>
+          <li><a href="#skills">Skills & Mentorship</a></li>
+          <li><a href="#advocacy">Advocacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> Yambio, South Sudan</li>
+          <li><i class="fas fa-phone"></i> 0928 673 465</li>
+          <li><i class="fas fa-envelope"></i> contact@foye-ss.org</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Foundation for Youth Empowerment (FOYE). All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    (function() {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
+      mobileMenu.querySelectorAll('a:not(.mobile-submenu a)').forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('active')));
+      document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const submenu = this.nextElementSibling;
+          const icon = this.querySelector('i');
+          document.querySelectorAll('.mobile-submenu.open').forEach(openSub => {
+            if (openSub !== submenu) {
+              openSub.classList.remove('open');
+              const otherIcon = openSub.previousElementSibling.querySelector('i');
+              if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+            }
+          });
+          submenu.classList.toggle('open');
+          icon.style.transform = submenu.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+      });
+      document.querySelectorAll('.mobile-submenu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('active')));
+
+      const slides = document.querySelectorAll('.hero-slide');
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 5000);
+
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+        const backToTop = document.getElementById('backToTop');
+        backToTop.classList.toggle('visible', window.scrollY > 400);
+      });
+      document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      const counters = document.querySelectorAll('.stat-number');
+      const counterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.getAttribute('data-count'));
+            const duration = 2000;
+            const start = performance.now();
+            function updateCount(now) {
+              const progress = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.floor(eased * target) + '+';
+              if (progress < 1) requestAnimationFrame(updateCount);
+            }
+            requestAnimationFrame(updateCount);
+            counterObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(c => counterObserver.observe(c));
+
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) contactForm.addEventListener('submit', e => { e.preventDefault(); alert('Thank you! We will get back to you soon.'); e.target.reset(); });
+    })();
+  </script>
+</body>
+</html>
